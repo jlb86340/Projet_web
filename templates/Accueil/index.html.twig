@@ -1,0 +1,15 @@
+{% extends 'Layouts/layout.html.twig' %}
+
+{% block title %}{{ parent() }} : Accueil{% endblock %}
+
+
+{% block body %}
+    <div id ="header">
+        {% include 'Layouts/header.html.twig' %}
+    </div>
+
+    <div id="menu">
+        {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}
+    </div>
+
+{% endblock %}

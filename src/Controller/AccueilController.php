@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AccueilController extends AbstractController
 {
-    #[Route('/accueil', name: 'app_accueil')]
-    public function indexAction(): JsonResponse
+    #[Route('/', name: 'app_accueil')]
+    public function indexAction(): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/AccueilController.php',
-        ]);
+        return $this->render('Accueil/index.html.twig');
+    }
+
+    public function menuAction(): Response
+    {
+        $args = array(
+        );
+        return $this->render('Layouts/menu.html.twig', $args);
     }
 }
