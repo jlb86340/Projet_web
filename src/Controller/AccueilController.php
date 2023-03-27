@@ -13,7 +13,6 @@ class AccueilController extends AbstractController
     {
         return $this->render('Accueil/index.html.twig');
     }
-
     public function menuAction(): Response
     {
         $args = array(
