@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\Sandbox;
+namespace App\Entity;
 
-use App\Repository\Sandbox\ProductRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]

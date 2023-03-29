@@ -10,9 +10,6 @@
 
     <div id="menu">
         {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}
-        {% for m in msg %}
-            {{ m }}<br>
-        {% endfor %}
         <a href="{{ path("app_accueil") }}">lien de l'accueil</a>
     </div>
 
