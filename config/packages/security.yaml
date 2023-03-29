@@ -22,14 +22,12 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
-
-    role_hierarchy: #pour la gestion des droits des rôles
-        ROLE_SUPERADMIN: ROLE_ADMIN
+    role_hierarchy:
         ROLE_ADMIN: ROLE_CLIENT
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
-    access_control: #pour les routes
+    access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
