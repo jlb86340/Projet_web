@@ -3,8 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Form\ProductType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProduitController extends AbstractController
@@ -19,12 +24,25 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/produit/add', name: 'add_produit')]
-    public function produitAddAction(EntityManagerInterface $em): Response
+    public function produitAddAction(EntityManagerInterface $em, Request $request): Response
     {
         $product = new Product();
 
-        $form = $this->createForm(FilmType::class, $product);
+        $form = $this->createForm(ProductType::class, $product);
         $form->add('send', SubmitType::class, ['label' => 'add Product']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($product);
+            $em->flush();
+            $this->addFlash('info', 'ajout du produit réussie');
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        if ($form->isSubmitted())
+            $this->addFlash('info', 'formulaire produit incorrect');
+        dump($_POST);
 
         $args = array(
             'myform' => $form->createView(),
