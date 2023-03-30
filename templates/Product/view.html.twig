@@ -1,0 +1,29 @@
+{% extends 'Layouts/layout_niv2.html.twig' %}
+
+{% block title %}{{ parent() }} : produits{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : détail du produit {{ product.id }}{% endblock %}
+
+{% block vue %}
+    {# normalement devrait être dans un fichier css #}
+    <style>
+        caption { border: red solid 1px; }
+        table { border: black solid 1px; }
+        th, td { border: black solid 1px; padding: 2px 10px 2px 10px;}
+        th { text-align: left; }
+    </style>
+
+    <p><a href="{{ path('produit_list') }}">vers la liste des produits</a></p>
+
+    <h2>Détail du produit</h2>
+    {# le produit existe : le cas d'erreur a été traité dans le contrôleur #}
+    <ul>
+        <li>id : {{ produit.id }}</li>
+        <li>dénomination : {{ produit.libelle }}</li>
+        <li>prix : {{ produit.price }}</li>
+        <li>quantité : {{ produit.quantStock}}</li>
+    </ul>
+
+    <h2>dump de vérification</h2>
+    {{ dump(produit) }}
+{% endblock %}
