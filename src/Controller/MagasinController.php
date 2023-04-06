@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +22,10 @@ class MagasinController extends AbstractController
     }
 
     #[Route('/stock', name: '_stock')]
-    public function stockAction(EntityManagerInterface $em): Response
+    public function stockAction(ManagerRegistry $doctrine): Response
     {
         if (isset($_POST['ajouter'])) {
+            $em = $doctrine->getManager();
             $panier = $em->getRepository('App:Order')->find($this->getParameter('id_user'));
             $panier-> setUserId($em->getRepository('App:User')->find($this->getParameter('id_user')));
 
@@ -37,6 +39,7 @@ class MagasinController extends AbstractController
             );
             return $this->redirectToRoute('magasin_stock', $args);
         }
+        $em = $doctrine->getManager();
         $productRepository = $em->getRepository(Product::class);
         $products = $productRepository->findAll();
         $args = array(

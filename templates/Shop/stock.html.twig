@@ -22,7 +22,7 @@
             <td>
                 <select>
                     {% for i in 0..produit.quantStock %}
-                    <option>{{ i }}</option>
+                    echo '<option value=".{{ i }}.">{{ i }}</option>';
                     {% endfor %}
                 </select>
             </td>
