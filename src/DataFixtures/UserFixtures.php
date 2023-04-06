@@ -27,7 +27,7 @@ class UserFixtures extends Fixture
             ->setName('Admin')
             ->setSurname('Super')
             ->setBirthdate(new \DateTime())
-            ->setRoles(['ROLES_SUPERADMIN']);
+            ->setRoles(['ROLE_SUPERADMIN']);
         $hashedpassword = $this->passwordHasher->hashPassword($user, 'nimbas');
         $user->setPassword($hashedpassword);
         $em->persist($user);
@@ -38,7 +38,7 @@ class UserFixtures extends Fixture
             ->setName('Gilles')
             ->setSurname('Subrenat')
             ->setBirthdate(new \DateTime())
-            ->setRoles(['ROLES_ADMIN']);
+            ->setRoles(['ROLE_ADMIN']);
         $hashedpassword = $this->passwordHasher->hashPassword($user, 'sellig');
         $user->setPassword($hashedpassword);
         $em->persist($user);
@@ -49,7 +49,7 @@ class UserFixtures extends Fixture
             ->setName('Rita')
             ->setSurname('Zrour')
             ->setBirthdate(new \DateTime())
-            ->setRoles(['ROLES_CLIENT']);
+            ->setRoles(['ROLE_CLIENT']);
         $hashedpassword = $this->passwordHasher->hashPassword($user, 'atir');
         $user->setPassword($hashedpassword);
         $em->persist($user);
@@ -60,7 +60,7 @@ class UserFixtures extends Fixture
             ->setName('Simon')
             ->setSurname('Symfony')
             ->setBirthdate(new \DateTime())
-            ->setRoles(['ROLES_CLIENT']);
+            ->setRoles(['ROLE_CLIENT']);
         $hashedpassword = $this->passwordHasher->hashPassword($user, 'nomis');
         $user->setPassword($hashedpassword);
         $em->persist($user);

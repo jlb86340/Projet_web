@@ -33,9 +33,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/$, roles: PUBLIC_ACCESS }   #pour rendre accessible la page d'accueil
-        - { path: ^/produit, roles: ROLE_ADMIN} #besoin d'être authentifié
+        - { path: ^/produit/list, roles: IS_AUTHENTICATED_FULLY } #besoin d'être authentifié
         - { path: ^/magasin, roles: IS_AUTHENTICATED_FULLY }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/, roles:  IS_AUTHENTICATED_REMEMBERED }
 
 when@test:
     security:
