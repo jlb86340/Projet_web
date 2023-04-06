@@ -9,11 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class MagasinController extends AbstractController
 {
     #[Route('/magasin', name: 'app_magasin')]
-    public function index(): JsonResponse
+    public function loginAction(): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/MagasinController.php',
-        ]);
+        return $this->render('Security/login.html.twig');
     }
 }
