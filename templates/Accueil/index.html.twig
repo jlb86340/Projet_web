@@ -1,21 +1,5 @@
-{% extends 'Layouts/layout.html.twig' %}
+{% extends 'Layouts/layout_niv2.html.twig' %}
 
 {% block title %}{{ parent() }} : Accueil{% endblock %}
 
 
-{% block body %}
-    <div id ="header">
-        {% include 'Layouts/header.html.twig' %}
-    </div>
-
-    <div id="menu">
-        <h1>Bienvenue sur le site</h1>
-        {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}
-        <a href="{{ path("app_accueil") }}">lien de l'accueil</a>
-    </div>
-
-    <div id="footer">
-        {% include 'Layouts/footer.html.twig' %}
-    </div>
-
-{% endblock %}

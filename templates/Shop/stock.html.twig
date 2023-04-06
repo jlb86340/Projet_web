@@ -1,0 +1,47 @@
+{% extends 'Layouts/layout_niv2.html.twig' %}
+
+{% block title %}{{ parent() }} : stock{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : liste des produits achetable{% endblock %}
+
+{% block vue %}
+    <table>
+        <tr>
+            <th>Libellé</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Choix</th>
+            <th>Action</th>
+        </tr>
+        {% for produit in produits %}
+        <tr>
+            <td>{{ produit.libelle }}</td>
+            <td>{{ produit.price }}</td>
+            <td>{{ produit.quantStock}}</td>
+            <td>
+               {# {% for quantStock in produit %}#}
+                <select>
+                    {#<option>{{ produit.quantStock}}</option>
+                    <option selected="selected">0</option>
+                    <option>{{ produit.quantStock}}</option>#}
+                    <option>-2</option>
+                    <option>-1</option>
+                    <option selected="selected">0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                </select>
+                {#{% endfor %}#}
+            </td>
+            <td>
+                <input type="button" value="Commander" />
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
