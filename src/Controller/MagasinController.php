@@ -21,48 +21,20 @@ class MagasinController extends AbstractController
         return $this->redirectToRoute('magasin_stock');
     }
 
+    //Cette action doit être ailleurs
     #[Route('/stock', name: '_stock')]
     public function stockAction(ManagerRegistry $doctrine): Response
     {
-        if (isset($_POST['ajouter'])) {
-            $em = $doctrine->getManager();
-            $panier = $em->getRepository('App:Order')->find($this->getParameter('id_user'));
-            $panier-> setUserId($em->getRepository('App:User')->find($this->getParameter('id_user')));
-
-            dump($panier);
-
-            $em->persist($panier);
-            $em->flush();
-
-            $args = array(
-                "produit_quantStock" => $_POST['ajouter'],
-            );
-            return $this->redirectToRoute('magasin_stock', $args);
-        }
-        $em = $doctrine->getManager();
-        $productRepository = $em->getRepository(Product::class);
-        $products = $productRepository->findAll();
-        $args = array(
-            'produits' => $products,
-        );
-        return $this->render('Shop/stock.html.twig', $args);
+        return $this->render('Shop/stock.html.twig');
     }
 
     #[Route('/addpanier', name: '_addpanier')]
-    public function addpanierAction(EntityManagerInterface $em, Request $request): Response
+    public function addpanierAction(EntityManagerInterface $em): Response
     {
-        $order = new Order();
-
-        $form = $this->createForm();
-        $user = $this->getUser()->getUserIdentifier();
-        $product = $order->getProduct()->getId();
-        $quantity = count($em->getRepository("App:Order")->findAll());
-
-        $order->getQuantity();
+        $produitRepository = $em->getRepository(Product::class);
+        $produits = $produitRepository->findAll();
         $args = array(
-            'user' => $user,
-            'product' => $product,
-            'quantity' => $quantity
+            'produits' => $produits,
         );
         return $this->render('Shop/stock.html.twig', $args);
     }

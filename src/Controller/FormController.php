@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,11 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class FormController extends AbstractController
 {
     #[Route('/form', name: 'app_form')]
-    public function index(): JsonResponse
+    public function ajoutPanierAction(int $id, EntityManagerInterface $em): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/FormController.php',
-        ]);
+        $quantityRepository = $em->getRepository(Product::class);
+        $product = $quantityRepository->find($id);
+
+
+        return $this->render();
     }
 }

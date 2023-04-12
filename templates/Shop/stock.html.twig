@@ -5,7 +5,7 @@
 {% block titre_principal %}{{ parent() }} : liste des produits achetable{% endblock %}
 
 {% block vue %}
-    <form action="" method="post">
+    <table>
         <tr>
             <th>Libellé</th>
             <th>Prix</th>
@@ -18,7 +18,7 @@
             <td>{{ produit.libelle }}</td>
             <td>{{ produit.price }}</td>
             <td>{{ produit.quantStock}}</td>
-            {{ form_start() }}
+            {# {{ form_start() }} #}
             <td>
                 <select>
                     {% for i in 0..produit.quantStock %}
@@ -31,5 +31,5 @@
             </td>
         </tr>
         {% endfor %}
-    </form>
+    </table>
 {% endblock %}
