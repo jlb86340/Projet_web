@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,22 +22,17 @@ class MagasinController extends AbstractController
         return $this->redirectToRoute('magasin_stock');
     }
 
-    //Cette action doit être ailleurs
     #[Route('/stock', name: '_stock')]
-    public function stockAction(ManagerRegistry $doctrine): Response
+    public function stockAction(EntityManagerInterface $em): Response
     {
-        return $this->render('Shop/stock.html.twig');
-    }
+        $order = new Order();
 
-    #[Route('/addpanier', name: '_addpanier')]
-    public function addpanierAction(EntityManagerInterface $em): Response
-    {
+        $form = $this->createForm(ProductType::class, $order);
         $produitRepository = $em->getRepository(Product::class);
         $produits = $produitRepository->findAll();
         $args = array(
             'produits' => $produits,
         );
-        return $this->render('Shop/stock.html.twig', $args);
+        return $this->render('Form/add_order.html.twig', $args);
     }
-
 }

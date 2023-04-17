@@ -1,0 +1,13 @@
+{% extends  'Layouts/layout_niv2.html.twig' %}
+
+{% block title %}{{ parent() }} : form{% endblock %}
+
+{% block titre_principal %}Vue "order_add"{% endblock %}
+
+{% block vue %}
+    <h2>Panier</h2>
+    {{ form(orderform) }}
+
+    <h2>dump</h2>
+    {{ dump(orderform) }}
+{% endblock %}
