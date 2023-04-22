@@ -11,13 +11,18 @@
         <p>Aucun produit dans la base de données</p>
     {% else %}
         <table>
-            <tr><th>dénomination</th><th></th></tr>
+            <tr>
+                <th>Dénomination</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+            </tr>
             {% for produit in produits %}
-                {% set urlView = path('produit_view', {'id' : produit.id}) %}
-                {% set urlDelete = path('produit_delete', {'id' : produit.id}) %}
                 <tr>
-                    <td><a href="{{ urlView }}">{{ produit.libelle }}</a></td>
-                    <td><a href="{{ urlDelete }}">delete</a></td>
+                    <td><a href="{{ path('produit_view', {'id' : produit.id}) }}">{{ produit.libelle }}</a></td>
+                    <td>{{ produit.price }}</td>
+                    <td>{{ produit.quantStock }}</td>
+                    <td><a href="{{ path('produit_add', {'id' : produit.id}) }}">Modifier</a></td>
+                    <td><a href="{{ path('produit_add', {'id' : produit.id}) }}">Supprimer</a></td>
                 </tr>
             {% endfor %}
         </table>

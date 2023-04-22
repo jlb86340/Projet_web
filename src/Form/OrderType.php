@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +14,8 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('quantity')
-            ->add('user')
-            ->add('product')
+            //->add('user')
+            //->add('product')
         ;
     }
 
