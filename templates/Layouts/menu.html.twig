@@ -30,18 +30,4 @@
         </p>
     </div>
 </nav>
-<h1>Accueil</h1>
-<p>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% if is_granted('ROLE_SUPERADMIN') %}
-        <h2>Bienvenue super administrateur ! </h2>
-        {% elseif is_granted('ROLE_ADMIN')%}
-        <h2>Bienvenue administrateur !</h2>
-        {% else %}
-        <h2>Bienvenue chère client !</h2>
-        {% endif %}
-    {% else %}
-        <h2>Bienvenue visiteur !</h2>
-    {% endif %}
-</p>
 
