@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 #[Route('/user', name: 'app_user')]
 class UserController extends AbstractController
@@ -26,6 +27,26 @@ class UserController extends AbstractController
             'users' => $users,
         );
         return $this->render('Users/users_list.html.twig', $args);
+    }
+
+    #[Route(
+        '/delete/{id}',
+        name: '_delete',
+        requirements: ['id' => '[1-9]\d*'],
+    )]
+    public function deleteAction(int $id, EntityManagerInterface $em): Response
+    {
+        $userRepository = $em->getRepository(User::class);
+        $user = $userRepository->find($id);
+
+        if (is_null($user))
+            throw new NotFoundHttpException('erreur suppression utilisateur ' . $id);
+
+        $em->remove($user);
+        $em->flush();
+        $this->addFlash('info', 'suppression utilisateur ' . $id . ' réussie');
+
+        return $this->redirectToRoute('app_user_list');
     }
 
 }

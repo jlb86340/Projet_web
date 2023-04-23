@@ -22,7 +22,10 @@
                     <td>{{ user.password }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.surname }}</td>
-                    </tr>
+                    <td>{{ user.birthdate |date("m/d/Y")}}</td>
+                    <td>{{ user.roles[0] }}</td>
+                    <td><a href="{{ path('app_user_delete', {'id' : user.id}) }}">Supprimer</a></td>
+                </tr>
             {% endfor %}
         </table>
     {% endif %}
