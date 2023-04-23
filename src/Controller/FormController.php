@@ -95,6 +95,7 @@ class FormController extends AbstractController
        $user = new User();
 
        $form = $this->createForm(UserType::class, $user);
+       $form->add('Confirmer', SubmitType::class, ['label' => 'Créer']);
        $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -105,9 +106,10 @@ class FormController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-        if($form->isSubmitted())
+        if($form->isSubmitted()) {
             $this->addFlash('info', 'Formulaire création de compte incorrect');
-
+            dump('caca');
+        }
        $args = array(
            'userform' => $form->createView(),
        );

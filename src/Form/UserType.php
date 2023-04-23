@@ -28,7 +28,7 @@ class UserType extends AbstractType
             ->add('name',
                 null,
                 [
-                    'label' => 'Nom',
+                    'label' => 'Prénom',
                 ])
             ->add('surname',
             null,

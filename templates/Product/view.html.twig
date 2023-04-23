@@ -6,15 +6,6 @@
 
 {% block vue %}
     {# normalement devrait être dans un fichier css #}
-    <style>
-        caption { border: red solid 1px; }
-        table { border: black solid 1px; }
-        th, td { border: black solid 1px; padding: 2px 10px 2px 10px;}
-        th { text-align: left; }
-    </style>
-
-    <p><a href="{{ path('produit_list') }}">vers la liste des produits</a></p>
-
 {#    <h2>Détail du produit</h2>#}
 {#    #}{# le produit existe : le cas d'erreur a été traité dans le contrôleur #}
 {#    <ul>#}
@@ -27,65 +18,36 @@
 {#    </ul>#}
 {#    #}
 
-    <h1> Voici la liste des produits </h1>
+    <h1> Voici la liste de nos produits </h1>
 
 
-{#    <div class="container">#}
-{#        <div class="row">#}
-{#            #}{# for produit in produits #}
-{#            <div class="col-6 col-lg-3">#}
-{#                <div class="card" style="width: 18rem;">#}
-{#                    <img src='https://place-hold.it/286x180/ff00ff.gif?text="{{ produit.name }}"' class="card-img-top" alt="...">#}
-{#                    <div class="card-body">#}
-{#                        <h5 class="card-title">{{ produit.name }}</h5>#}
-{#                        <p class="card-text">Cliquez en dessous pour ajouter des {{ produit.name }} à votre panier</p>#}
-{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+    <div class="container">
+        <div class="row">
+            {% for produit in produits  %}
+            <div class="col-6 col-lg-3" style="padding: 50px">
+                <div class="card" style="width: 18rem;">
+                    <img src='https://place-hold.it/286x180/DD725C.gif?text={{ produit.libelle }}' class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ produit.libelle }}</h5>
+                        <p class="card-text">{{ produit.price }} €</p>
+                        <div>
+                            <a href="#" class="btn btn-primary">Ajouter</a>
 
 {#                        //if produit.stockQuantite == 0#}
 {#                            //message " produit indisponible"#}
 {#                        //else#}
-{#                            <select name="item-tomates" id="">#}
-{#                                {% for q in produit.quantStock %}#}
-{#                                    <option value="{{ q }}">{{ q }}</option>#}
-{#                                {{ endfor }}#}
-{#                            </select>#}
-{#                            <a href="{{ path('add_panier' , { idProduit , qtt}) }}"></a>#}
+                            <select name="quantChoice" size="2">
+                                {% for q in 0..produit.quantStock %}
+                                    <option value="{{ q }}">{{ q }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+{#                            <a href="{{ path('add_panier' , { produit.id , qtt}) }}"></a>#}
 {#                        //endif#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-6 col-lg-3">#}
-{#                <div class="card" style="width: 18rem;">#}
-{#                    <img src="..." class="card-img-top" alt="...">#}
-{#                    <div class="card-body">#}
-{#                        <h5 class="card-title">Card title</h5>#}
-{#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
-{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-6 col-lg-3">#}
-{#                <div class="card" style="width: 18rem;">#}
-{#                    <img src="..." class="card-img-top" alt="...">#}
-{#                    <div class="card-body">#}
-{#                        <h5 class="card-title">Card title</h5>#}
-{#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
-{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-6 col-lg-3">#}
-{#                <div class="card" style="width: 18rem;">#}
-{#                    <img src="..." class="card-img-top" alt="...">#}
-{#                    <div class="card-body">#}
-{#                        <h5 class="card-title">Card title</h5>#}
-{#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
-{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-        </div>
-
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
     </div>
 
 

@@ -2,7 +2,7 @@
 
 
 
-{% block body %}
+{% block main %}
     <div id ="header">
         {% include 'Layouts/header.html.twig' %}
     </div>
@@ -16,10 +16,10 @@
     </div>
 
 {% endblock %}
-
-
 {% block footer %}
+{#    <div class="fixed-bottom">#}
     <div id="footer">
         {% include 'Layouts/footer.html.twig' %}
     </div>
+{#    </div>#}
 {% endblock %}

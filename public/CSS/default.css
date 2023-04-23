@@ -1,17 +1,9 @@
-html,body{
+html,main{
     align-items: center;
     justify-content: center;
 }
 
-form{
-    width: 25%;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 0 auto;
 
-    /*display: flex;*/
-    /*flex-direction: column;*/
-}
 card{
     margin: 500px;
     alignment: center;
@@ -23,8 +15,10 @@ header{
     background: #B0413E;
     height: 100px;
 }
-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
+
+
+/*footer{*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    width: 100%;*/
+/*}*/

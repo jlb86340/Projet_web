@@ -19,29 +19,31 @@
 {#        {{ form_row(userform.birthdate) }}#}
 
 {#        {{ form_end(userform) }}#}
+            {{ form_start(userform) }}
+
+    <div class="container">
+    <div class="row">
+        <div class="mb-3">
+            {{ form_row(userform.login, {'attr': {'class': 'form-control'}})  }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(userform.password, {'attr': {'class': 'form-control'}})  }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(userform.name, {'attr': {'class': 'form-control'}})  }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(userform.surname, {'attr': {'class': 'form-control'}})  }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(userform.birthdate, {'attr': {'class': 'form-control'}})  }}
+        </div>
+        <div>
+            {{ form_rest(userform)  }}
+        </div>
     </div>
+</div>
+{{ form_end(userform) }}
 
-    <form>
-
-        <div class="mb-3">
-            {{ form_label(userform.login, null,  { 'label_attr' : { 'class' : 'form-label' } }) }}
-            {{ form_widget(userform.login , {'attr' : {'class' : 'form-control'}}) }}
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-
-{#        <div class="mb-3">#}
-{#            <label for="exampleInputPassword1" class="form-label">Password</label>#}
-{#            <input type="password" class="form-control" id="exampleInputPassword1">#}
-{#        </div>#}
-{#        #}
-{#        <div class="mb-3 form-check">#}
-{#            <input type="checkbox" class="form-check-input" id="exampleCheck1">#}
-{#            <label class="form-check-label" for="exampleCheck1">Check me out</label>#}
-{#        </div>#}
-    </form>
 {% endblock %}
+{% block footer %}{% endblock %}
