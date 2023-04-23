@@ -1,5 +1,7 @@
 {% extends 'Layouts/layout.html.twig' %}
 
+
+
 {% block body %}
     <div id ="header">
         {% include 'Layouts/header.html.twig' %}
@@ -7,15 +9,17 @@
 
     <div id="menu">
         {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}
-        <a href="{{ path("app_accueil") }}">lien de l'accueil</a>
     </div>
 
     <div id="vue">
         {% block vue %}{% endblock %}
     </div>
 
+{% endblock %}
+
+
+{% block footer %}
     <div id="footer">
         {% include 'Layouts/footer.html.twig' %}
     </div>
-
 {% endblock %}

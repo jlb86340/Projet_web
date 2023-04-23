@@ -1,12 +1,48 @@
 {# menu de l'application #}
-
-<strong>Menu</strong>
-<ul>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('app_accueil') }}">Accueil</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('ROLE_SUPERADMIN') %}
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">Gérer les administrateurs</a>
+                    {% elseif is_granted('ROLE_ADMIN') %}
+                        <a class="nav-link" href="{{ path('app_logout') }}">Gérer les utilisateurs</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">Ajouter un produit</a>
+                        {% else %}
+                            <a class="nav-link" href="{{ path('app_logout') }}">Magasin</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}">Panier</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}">Éditer/Modifier son profil</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% endif %}
+                {% else %}
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                    <a class="nav-link" href="{{ path('app_form_user_add') }}">Créer un compte</a>
+                {% endif %}
+            </div>
+        </div>
+        <p>
+            <img src="{{asset('Images/cart.ico')}}" alt="logoHeader" width="50" height="50" style="object-position: right"/>
+        </p>
+    </div>
+</nav>
+<h1>Accueil</h1>
+<p>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <li><a href="{{ path('app_logout') }}">déconnexion</a></li>
+        {% if is_granted('ROLE_SUPERADMIN') %}
+        <h2>Bienvenue super administrateur ! </h2>
+        {% elseif is_granted('ROLE_ADMIN')%}
+        <h2>Bienvenue administrateur !</h2>
+        {% else %}
+        <h2>Bienvenue chère client !</h2>
+        {% endif %}
     {% else %}
-        <li><a href="{{ path('app_login') }}">connexion</a></li>
+        <h2>Bienvenue visiteur !</h2>
     {% endif %}
-        <li><a href="{{ path('produit_list') }}">liste des produits</a></li>
-    <li>Panier</li>
-</ul>
+</p>
+

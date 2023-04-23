@@ -25,7 +25,7 @@ class MagasinController extends AbstractController
     #[Route('/stock', name: '_stock')]
     public function stockAction(EntityManagerInterface $em): Response
     {
-        $order = new Order();
+        $order = new Product();
 
         $form = $this->createForm(ProductType::class, $order);
         $produitRepository = $em->getRepository(Product::class);
@@ -33,6 +33,7 @@ class MagasinController extends AbstractController
         $args = array(
             'produits' => $produits,
         );
-        return $this->render('Form/add_order.html.twig', $args);
+
+        return $this->render('Product/view.html.twig', $args);
     }
 }

@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Entity\User;
 use App\Form\OrderType;
 use App\Form\ProductType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -18,9 +20,9 @@ class FormController extends AbstractController
     #[Route('/order/add', name: '_order_add')]
     public function ajoutPanierAction(EntityManagerInterface $em, Request $request): Response
     {
-        $order = new Product();
+        $order = new Order();
 
-        $form = $this->createForm(ProductType::class, $order);
+        $form = $this->createForm(OrderType::class, $order);
         $form->add('send', SubmitType::class, ['label' => 'Ajouter']);
         $form->handleRequest($request);
 
@@ -36,7 +38,7 @@ class FormController extends AbstractController
             $this->addFlash('info', 'formulaire ajout panier incorrect');
 
         $args = array(
-            'productform' => $form->createView(),
+            'orderform' => $form->createView(),
         );
         return $this->render('Form/add_order.html.twig', $args);
     }
@@ -64,9 +66,6 @@ class FormController extends AbstractController
         }
 
         $form = $this->createForm(ProductType::class, $product);
-
-//        dump($request);
-//        die();
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -87,4 +86,32 @@ class FormController extends AbstractController
 
         return $this->render('Form/add_product.html.twig', $args);
     }
+    #[Route(
+    '/user/add',
+    name: '_user_add',
+    )]
+    public function ajoutUserAction(EntityManagerInterface $em, Request $request): Response
+    {
+       $user = new User();
+
+       $form = $this->createForm(UserType::class, $user);
+       $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('info', 'Création du compte réussi !');
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        if($form->isSubmitted())
+            $this->addFlash('info', 'Formulaire création de compte incorrect');
+
+       $args = array(
+           'userform' => $form->createView(),
+       );
+       return $this->render('Form/add_user.html.twig', $args);
+    }
+
 }

@@ -15,15 +15,78 @@
 
     <p><a href="{{ path('produit_list') }}">vers la liste des produits</a></p>
 
-    <h2>Détail du produit</h2>
-    {# le produit existe : le cas d'erreur a été traité dans le contrôleur #}
-    <ul>
-        <li>id : {{ produit.id }}</li>
-        <li>dénomination : {{ produit.libelle }}</li>
-        <li>prix : {{ produit.price }}</li>
-        <li>quantité : {{ produit.quantStock}}</li>
-    </ul>
+{#    <h2>Détail du produit</h2>#}
+{#    #}{# le produit existe : le cas d'erreur a été traité dans le contrôleur #}
+{#    <ul>#}
+{#        {% for produit in produits %}#}
+{#        <li>id : {{ produit.id }}</li>#}
+{#        <li>dénomination : {{ produit.libelle }}</li>#}
+{#        <li>prix : {{ produit.price }}</li>#}
+{#        <li>quantité : {{ produit.quantStock}}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#    #}
 
-    <h2>dump de vérification</h2>
-    {{ dump(produit) }}
+    <h1> Voici la liste des produits </h1>
+
+
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            #}{# for produit in produits #}
+{#            <div class="col-6 col-lg-3">#}
+{#                <div class="card" style="width: 18rem;">#}
+{#                    <img src='https://place-hold.it/286x180/ff00ff.gif?text="{{ produit.name }}"' class="card-img-top" alt="...">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">{{ produit.name }}</h5>#}
+{#                        <p class="card-text">Cliquez en dessous pour ajouter des {{ produit.name }} à votre panier</p>#}
+{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+
+{#                        //if produit.stockQuantite == 0#}
+{#                            //message " produit indisponible"#}
+{#                        //else#}
+{#                            <select name="item-tomates" id="">#}
+{#                                {% for q in produit.quantStock %}#}
+{#                                    <option value="{{ q }}">{{ q }}</option>#}
+{#                                {{ endfor }}#}
+{#                            </select>#}
+{#                            <a href="{{ path('add_panier' , { idProduit , qtt}) }}"></a>#}
+{#                        //endif#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-6 col-lg-3">#}
+{#                <div class="card" style="width: 18rem;">#}
+{#                    <img src="..." class="card-img-top" alt="...">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">Card title</h5>#}
+{#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-6 col-lg-3">#}
+{#                <div class="card" style="width: 18rem;">#}
+{#                    <img src="..." class="card-img-top" alt="...">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">Card title</h5>#}
+{#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-6 col-lg-3">#}
+{#                <div class="card" style="width: 18rem;">#}
+{#                    <img src="..." class="card-img-top" alt="...">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">Card title</h5>#}
+{#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+
+    </div>
+
+
 {% endblock %}
