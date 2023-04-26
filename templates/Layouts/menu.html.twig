@@ -13,10 +13,11 @@
                     {% elseif is_granted('ROLE_ADMIN') %}
                         <a class="nav-link" href="{{ path('app_user_list') }}">Gérer les utilisateurs</a>
                         <a class="nav-link" href="{{ path('app_accueil') }}">Ajouter un produit</a>
-                        {% else %}
-                            <a class="nav-link" href="{{ path('app_logout') }}">Magasin</a>
-                            <a class="nav-link" href="{{ path('app_logout') }}">Panier</a>
-                            <a class="nav-link" href="{{ path('app_logout') }}">Éditer/Modifier son profil</a>
+                        <a class="nav-link" href="https://www.amazon.fr/">Lien</a>
+                    {% else %}
+                            <a class="nav-link" href="{{ path('app_form_order_add') }}">Magasin</a>
+                            <a class="nav-link" href="{{ path('app_order_list') }}">Panier</a>
+                            <a class="nav-link" href="{{ path('app_form_user_update', {'id':user.id})}}">Éditer/Modifier son profil</a>
                     {% endif %}
                     <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                 {% else %}
@@ -30,4 +31,3 @@
         </p>
     </div>
 </nav>
-

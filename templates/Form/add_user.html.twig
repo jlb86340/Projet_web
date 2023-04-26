@@ -5,45 +5,38 @@
 {% block titre_principal %}Vue "order_add"{% endblock %}
 
 {% block vue %}
-    <h2>Création du compte</h2>
-{#        {{ form_start(userform) }}#}
-
-{#        {{ form_label(userform.login) }}#}
-{#        {{ form_widget(userform.login) }}#}
-{#        {{ form_errors(userform.login) }}#}
-
-{#        {{ form_row(userform.login) }}#}
-{#        {{ form_row(userform.password) }}#}
-{#        {{ form_row(userform.name) }}#}
-{#        {{ form_row(userform.surname) }}#}
-{#        {{ form_row(userform.birthdate) }}#}
-
-{#        {{ form_end(userform) }}#}
+        {% if isUpdateMode  %}
+            <h2>Modification du compte</h2>
+        {% else %}
+            <h2>Création du compte</h2>
+        {% endif %}
             {{ form_start(userform) }}
 
     <div class="container">
-    <div class="row">
-        <div class="mb-3">
-            {{ form_row(userform.login, {'attr': {'class': 'form-control'}})  }}
-        </div>
-        <div class="mb-3">
-            {{ form_row(userform.password, {'attr': {'class': 'form-control'}})  }}
-        </div>
-        <div class="mb-3">
-            {{ form_row(userform.name, {'attr': {'class': 'form-control'}})  }}
-        </div>
-        <div class="mb-3">
-            {{ form_row(userform.surname, {'attr': {'class': 'form-control'}})  }}
-        </div>
-        <div class="mb-3">
-            {{ form_row(userform.birthdate, {'attr': {'class': 'form-control'}})  }}
-        </div>
-        <div>
-            {{ form_rest(userform)  }}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+            <div class="row">
+            <div class="mb-3">
+                {{ form_row(userform.login, {'attr': {'class': 'form-control'}})  }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(userform.password, {'attr': {'class': 'form-control'}})  }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(userform.name, {'attr': {'class': 'form-control'}})  }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(userform.surname, {'attr': {'class': 'form-control'}})  }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(userform.birthdate, {'attr': {'class': 'form-control'}})  }}
+            </div>
+            <div>
+                {{ form_rest(userform)  }}
+            </div>
+            </div>
         </div>
     </div>
 </div>
 {{ form_end(userform) }}
-
 {% endblock %}
-{% block footer %}{% endblock %}

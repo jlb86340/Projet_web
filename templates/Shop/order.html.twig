@@ -1,0 +1,28 @@
+{% extends 'Layouts/layout_niv2.html.twig' %}
+
+{% block title %}{{ parent() }} : produits{% endblock %}
+
+{% block titre_principal %}{{ parent() }} : Panier{% endblock %}
+{% block vue %}
+    <p><a href="{{ path('produit_add') }}">ajouter un produit</a></p>
+
+    {% if produits|length == 0 %}
+        <p>Aucun produit dans la base de données</p>
+    {% else %}
+        <table>
+            <tr>
+                <th>Dénomination</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.product }}</td>
+                    <td>{{ order.quantStock }}</td>
+                    </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {{ dump(orders) }}
+{% endblock %}

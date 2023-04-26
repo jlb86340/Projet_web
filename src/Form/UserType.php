@@ -35,10 +35,11 @@ class UserType extends AbstractType
             [
                 'label' => 'Nom de famille',
             ])
-            ->add('birthdate',
-            null,
+            ->add('birthdate',null,
             [
                 'label' => 'Date de naissance',
+                'widget' => 'single_text',
+                 'format' => 'yyyy-MM-dd',
             ])
         ;
     }

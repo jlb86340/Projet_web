@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('/list', name: '_list')]
-    public function userAction(EntityManagerInterface $em): Response
+    public function listAction(EntityManagerInterface $em): Response
     {
         $userRepository = $em->getRepository(User::class);
         $users = $userRepository->findAll();
@@ -28,7 +28,6 @@ class UserController extends AbstractController
         );
         return $this->render('Users/users_list.html.twig', $args);
     }
-
     #[Route(
         '/delete/{id}',
         name: '_delete',

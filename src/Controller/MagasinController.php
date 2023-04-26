@@ -22,18 +22,18 @@ class MagasinController extends AbstractController
         return $this->redirectToRoute('magasin_stock');
     }
 
-    #[Route('/stock', name: '_stock')]
-    public function stockAction(EntityManagerInterface $em): Response
-    {
-        $order = new Product();
-
-        $form = $this->createForm(ProductType::class, $order);
-        $produitRepository = $em->getRepository(Product::class);
-        $produits = $produitRepository->findAll();
-        $args = array(
-            'produits' => $produits,
-        );
-
-        return $this->render('Product/view.html.twig', $args);
-    }
+//    #[Route('/stock', name: '_stock')]
+//    public function stockAction(EntityManagerInterface $em): Response
+//    {
+//        $order = new Product();
+//
+//        $form = $this->createForm(ProductType::class, $order);
+//        $orderRepository = $em->getRepository(Product::class);
+//        $order = $orderRepository->findAll();
+//        $args = array(
+//            'produits' => $order,
+//        );
+//
+//        return $this->render('Product/view.html.twig', $args);
+//    }
 }

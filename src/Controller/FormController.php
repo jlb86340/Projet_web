@@ -13,34 +13,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 #[Route('/form', name: 'app_form')]
 class FormController extends AbstractController
 {
     #[Route('/order/add', name: '_order_add')]
-    public function ajoutPanierAction(EntityManagerInterface $em, Request $request): Response
+    #[Route('/order/add/{idProduit}', name: '_order_add')]
+    public function ajoutPanierAction(EntityManagerInterface $em, Request $request, $idProduit = null): Response
     {
-        $order = new Order();
+//        $product = new Product();
 
-        $form = $this->createForm(OrderType::class, $order);
-        $form->add('send', SubmitType::class, ['label' => 'Ajouter']);
-        $form->handleRequest($request);
+//        $form = $this->createForm(ProductType::class, $product);
+        $productRepository = $em->getRepository(Product::class);
+        $products = $productRepository->findAll();
+        $forms = [];
 
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $em->persist($order);
-            $em->flush();
-            $this->addFlash('info', 'ajouté au panier');
-            return $this->redirectToRoute('app_accueil');
+        foreach($products as $product) {
+            $order = new Order();
+            $form = $this->createForm(OrderType::class, $order);
+            $form->add('send', SubmitType::class, ['label' => 'Ajouter']);
+            $form->handleRequest($request);
+            $f
+//            $forms[$product->getId()] = $form->createView();
+
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $order->setUser($this->getUser());
+                $order->setProduct($idProduit);
+                $em->persist($order);
+                $em->flush();
+                $this->addFlash('info', 'ajouté au panier');
+                return $this->redirectToRoute('app_accueil');
+            }
+
+            if ($form->isSubmitted())
+                $this->addFlash('info', 'formulaire ajout panier incorrect');
         }
-
-        if($form->isSubmitted())
-            $this->addFlash('info', 'formulaire ajout panier incorrect');
-
         $args = array(
-            'orderform' => $form->createView(),
+            'forms' => $form->createView(),
+            'produits' => $products,
         );
-        return $this->render('Form/add_order.html.twig', $args);
+        return $this->render('Product/view.html.twig', $args);
     }
 
     #[Route(
@@ -90,9 +105,24 @@ class FormController extends AbstractController
     '/user/add',
     name: '_user_add',
     )]
-    public function ajoutUserAction(EntityManagerInterface $em, Request $request): Response
+    #[Route(
+        '/user/update/{id}',
+        name: '_user_update',
+        requirements: ['id' => '[1-9]\d*'],
+    )]
+    public function ajoutUserAction(EntityManagerInterface $em, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
-       $user = new User();
+        $id = $request->get('id');
+        if ($id == null){
+            $user = new User();
+            $isUpdateMode = false;
+            $user->setRoles(["ROLE_CLIENT"]);
+        }
+        else{
+            $isUpdateMode = true;
+            $userRepository = $em->getRepository(User::class);
+            $user = $userRepository->find($id);
+        }
 
        $form = $this->createForm(UserType::class, $user);
        $form->add('Confirmer', SubmitType::class, ['label' => 'Créer']);
@@ -100,20 +130,39 @@ class FormController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $password = $user->getPassword();
+            //Pour le service
+            $response = $this->forward('App\Controller\AccueilController',
+            [
+                'clearPassword' => $password,
+            ]);
+
+            $isSamePassword = $userRepository->findOneBy(['password' => $password]);
+            if (!$isSamePassword) {
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $user->getPassword()
+                );
+                $user->setPassword($hashedPassword);
+            }
+
+
             $em->persist($user);
             $em->flush();
             $this->addFlash('info', 'Création du compte réussi !');
-            return $this->redirectToRoute('app_accueil');
+            return $this->redirectToRoute('app_accueil_password', $response);
         }
 
         if($form->isSubmitted()) {
             $this->addFlash('info', 'Formulaire création de compte incorrect');
-            dump('caca');
         }
+
        $args = array(
+           'isUpdateMode' => $isUpdateMode,
            'userform' => $form->createView(),
        );
        return $this->render('Form/add_user.html.twig', $args);
-    }
+//       return $this->render('Product/view.html.twig', $args);
 
+    }
 }

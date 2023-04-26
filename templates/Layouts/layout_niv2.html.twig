@@ -1,9 +1,8 @@
 {% extends 'Layouts/layout.html.twig' %}
 
 
-
 {% block main %}
-    <div id ="header">
+<div id ="header">
         {% include 'Layouts/header.html.twig' %}
     </div>
 
@@ -14,12 +13,9 @@
     <div id="vue">
         {% block vue %}{% endblock %}
     </div>
-
 {% endblock %}
 {% block footer %}
-{#    <div class="fixed-bottom">#}
-    <div id="footer" class="fixed-bottom">
+    <div id="footer" class="sticky-bottom">
         {% include 'Layouts/footer.html.twig' %}
     </div>
-{#    </div>#}
 {% endblock %}

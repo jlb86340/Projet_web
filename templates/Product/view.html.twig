@@ -18,37 +18,43 @@
 {#    </ul>#}
 {#    #}
 
-    <h1> Voici la liste de nos produits </h1>
-
-
-    <div class="container">
-        <div class="row">
-            {% for produit in produits  %}
-            <div class="col-6 col-lg-3" style="padding: 50px">
+{#        <div class="container">#}
+    <div class="row justify-content-evenly">
+{#        {{  dump(forms)}}#}
+            {% set count = 1 %}
+            {% for produit in produits %}
+                <div class="col-5">
+                    {{ form_start(forms[produit.id]) }}
                 <div class="card" style="width: 18rem;">
-                    <img src='https://place-hold.it/286x180/DD725C.gif?text={{ produit.libelle }}' class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{ produit.libelle }}</h5>
-                        <p class="card-text">{{ produit.price }} €</p>
-                        <div>
-                            <a href="#" class="btn btn-primary">Ajouter</a>
-
-{#                        //if produit.stockQuantite == 0#}
-{#                            //message " produit indisponible"#}
-{#                        //else#}
-                            <select name="quantChoice" size="2">
-                                {% for q in 0..produit.quantStock %}
-                                    <option value="{{ q }}">{{ q }}</option>
-                                {% endfor %}
-                            </select>
+                        <img src='https://place-hold.it/286x180/DD725C.gif?text={{ produit.libelle }}' class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ produit.libelle }}</h5>
+                            <p class="card-text">{{ produit.price }} €</p>
+                            <div>
+                                <a href="{{ path('app_form_order_add' , { 'idProduit': produit.id}) }}" class="btn btn-primary" type="submit">Ajouter</a>
+                                {{ form_widget(forms[produit.id].quantity) }}
+                                {#                        //if produit.stockQuantite == 0#}
+    {#                            //message " produit indisponible"#}
+    {#                        //else#}
+{#                                <select name="quantChoice" size="2">#}
+{#                                    {% for q in 0..produit.quantStock %}#}
+{#                                        <option value="{{ q }}">{{ q }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+                            </div>
+    {#                            <a href="{{ path('add_panier' , { produit.id , qtt}) }}"></a>#}
+    {#                        //endif#}
                         </div>
-{#                            <a href="{{ path('add_panier' , { produit.id , qtt}) }}"></a>#}
-{#                        //endif#}
                     </div>
                 </div>
-            </div>
+                    {{ form_end(forms[produit.id]) }}
+                </div>
+                {% set count = count + 1 %}
             {% endfor %}
     </div>
+
+{#    #}{#    </div>#}
 
 
 {% endblock %}
