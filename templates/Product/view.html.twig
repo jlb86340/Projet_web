@@ -34,14 +34,11 @@
                                 {{ form_row(forms[produit.id].quantity , { 'attr' : {'min' : 0 , 'max' : produit.quantStock}}) }}
 
                             </div>
-
                             {{ form_row(forms[produit.id].send) }}
-
-
                         </div>
                     </div>
                 </div>
-                    {{ form_end(forms[produit.id], {render_rest: false}) }}
+                    {{ form_end(forms[produit.id]) }}
                 </div>
             {% endfor %}
     </div>

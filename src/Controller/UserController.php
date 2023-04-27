@@ -41,6 +41,9 @@ class UserController extends AbstractController
         if (is_null($user))
             throw new NotFoundHttpException('erreur suppression utilisateur ' . $id);
 
+        if ($id == $user->getId())
+            return $this->redirectToRoute('app_user_list');
+
         $em->remove($user);
         $em->flush();
         $this->addFlash('info', 'suppression utilisateur ' . $id . ' réussie');

@@ -40,15 +40,12 @@ class FormController extends AbstractController
                 ]
                 ]);
             $form->handleRequest($request);
-
-            $forms[$product->getId()] = $form->createView();
-
-            dump($request);
-            die();
+//            dump($request);
+//            die();
             if ($form->isSubmitted() && $form->isValid()) {
-                dump($request);die;
                 $order->setUser($this->getUser());
-                $order->setProduct($idProduit);
+                $order->setProduct($product);
+//                dump($order);die;
                 $em->persist($order);
 
                 //TODO : Met à jour le produit
@@ -59,6 +56,8 @@ class FormController extends AbstractController
                 $this->addFlash('info', 'ajouté au panier');
                 return $this->redirectToRoute('app_form_order_add');
             }
+            $forms[$product->getId()] = $form->createView();
+
 
             if ($form->isSubmitted())
                 $this->addFlash('info', 'formulaire ajout panier incorrect');

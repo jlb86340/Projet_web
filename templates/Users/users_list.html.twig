@@ -24,7 +24,9 @@
                     <td>{{ user.surname }}</td>
                     <td>{{ user.birthdate |date("m/d/Y")}}</td>
                     <td>{{ user.roles[0] }}</td>
+                    {% if (user.roles[0] != 'ROLE_SUPERADMIN') %}
                     <td><a href="{{ path('app_user_delete', {'id' : user.id}) }}">Supprimer</a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>
