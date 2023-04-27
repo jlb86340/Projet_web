@@ -9,10 +9,10 @@
             <div class="navbar-nav">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     {% if is_granted('ROLE_SUPERADMIN') %}
-                        <a class="nav-link" href="{{ path('app_logout') }}">Gérer les administrateurs</a>
+                        <a class="nav-link" href="{{ path('app_form_user_add') }}">Ajouter un administrateur</a>
                     {% elseif is_granted('ROLE_ADMIN') %}
                         <a class="nav-link" href="{{ path('app_user_list') }}">Gérer les utilisateurs</a>
-                        <a class="nav-link" href="{{ path('app_accueil') }}">Ajouter un produit</a>
+                        <a class="nav-link" href="{{ path('app_form_product_add') }}">Ajouter un produit</a>
                         <a class="nav-link" href="https://www.amazon.fr/">Lien</a>
                     {% else %}
                             <a class="nav-link" href="{{ path('app_form_order_add') }}">Magasin</a>

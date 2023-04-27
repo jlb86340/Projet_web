@@ -14,15 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
-   // #[Route('/{clearPassword}', name: 'app_accueil_password')]
+    //#[Route('/{clearPassword}', name: 'app_accueil_password')]
     public function indexAction(string $clearPassword = null): Response
     {
-        dump($clearPassword);
         $passwordService = new PasswordService();
         $user = $this->getUser();
         $isStrongPassword = null;
 //        dump($user);
-//        dump($passwordClear);
+        dump($clearPassword);
         if ($user != null){
             if ($passwordService->testPassword($user->getPassword())) {
                 $isStrongPassword = true;

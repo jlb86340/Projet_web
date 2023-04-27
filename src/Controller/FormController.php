@@ -22,7 +22,7 @@ class FormController extends AbstractController
     #[Route('/order/add/{idProduit}', name: '_order_add')]
     public function ajoutPanierAction(EntityManagerInterface $em, Request $request, $idProduit = null): Response
     {
-//        $product = new Product();
+        $product = new Product();
 
 //        $form = $this->createForm(ProductType::class, $product);
         $productRepository = $em->getRepository(Product::class);
@@ -30,29 +30,43 @@ class FormController extends AbstractController
         $forms = [];
 
         foreach($products as $product) {
+
             $order = new Order();
             $form = $this->createForm(OrderType::class, $order);
-            $form->add('send', SubmitType::class, ['label' => 'Ajouter']);
+            $form->add('send', SubmitType::class, [
+                'label' => 'Ajouter' ,
+                'attr' => [
+                    'value' => $product->getId()
+                ]
+                ]);
             $form->handleRequest($request);
-            $f
-//            $forms[$product->getId()] = $form->createView();
 
+            $forms[$product->getId()] = $form->createView();
 
+            dump($request);
+            die();
             if ($form->isSubmitted() && $form->isValid()) {
-
+                dump($request);die;
                 $order->setUser($this->getUser());
                 $order->setProduct($idProduit);
                 $em->persist($order);
+
+                //TODO : Met à jour le produit
+
+                //FIXME : Problème de données
+
                 $em->flush();
                 $this->addFlash('info', 'ajouté au panier');
-                return $this->redirectToRoute('app_accueil');
+                return $this->redirectToRoute('app_form_order_add');
             }
 
             if ($form->isSubmitted())
                 $this->addFlash('info', 'formulaire ajout panier incorrect');
         }
+
+
         $args = array(
-            'forms' => $form->createView(),
+            'forms' => $forms,
             'produits' => $products,
         );
         return $this->render('Product/view.html.twig', $args);
@@ -116,7 +130,14 @@ class FormController extends AbstractController
         if ($id == null){
             $user = new User();
             $isUpdateMode = false;
-            $user->setRoles(["ROLE_CLIENT"]);
+//            dump($this->getUser()->getRoles());
+//            die();
+            if ($this->getUser()->getRoles()[0] == "ROLE_SUPERADMIN"){
+                $user->setRoles(["ROLE_ADMIN"]);
+            }
+            else {
+                $user->setRoles(["ROLE_CLIENT"]);
+            }
         }
         else{
             $isUpdateMode = true;
@@ -136,7 +157,7 @@ class FormController extends AbstractController
             [
                 'clearPassword' => $password,
             ]);
-
+            $userRepository = $em->getRepository(User::class);
             $isSamePassword = $userRepository->findOneBy(['password' => $password]);
             if (!$isSamePassword) {
                 $hashedPassword = $passwordHasher->hashPassword(
@@ -150,7 +171,7 @@ class FormController extends AbstractController
             $em->persist($user);
             $em->flush();
             $this->addFlash('info', 'Création du compte réussi !');
-            return $this->redirectToRoute('app_accueil_password', $response);
+            return $this->redirectToRoute('app_accueil');
         }
 
         if($form->isSubmitted()) {

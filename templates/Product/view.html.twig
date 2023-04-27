@@ -20,8 +20,7 @@
 
 {#        <div class="container">#}
     <div class="row justify-content-evenly">
-{#        {{  dump(forms)}}#}
-            {% set count = 1 %}
+
             {% for produit in produits %}
                 <div class="col-5">
                     {{ form_start(forms[produit.id]) }}
@@ -32,27 +31,21 @@
                             <h5 class="card-title">{{ produit.libelle }}</h5>
                             <p class="card-text">{{ produit.price }} €</p>
                             <div>
-                                <a href="{{ path('app_form_order_add' , { 'idProduit': produit.id}) }}" class="btn btn-primary" type="submit">Ajouter</a>
-                                {{ form_widget(forms[produit.id].quantity) }}
-                                {#                        //if produit.stockQuantite == 0#}
-    {#                            //message " produit indisponible"#}
-    {#                        //else#}
-{#                                <select name="quantChoice" size="2">#}
-{#                                    {% for q in 0..produit.quantStock %}#}
-{#                                        <option value="{{ q }}">{{ q }}</option>#}
-{#                                    {% endfor %}#}
-{#                                </select>#}
+                                {{ form_row(forms[produit.id].quantity , { 'attr' : {'min' : 0 , 'max' : produit.quantStock}}) }}
+
                             </div>
-    {#                            <a href="{{ path('add_panier' , { produit.id , qtt}) }}"></a>#}
-    {#                        //endif#}
+
+                            {{ form_row(forms[produit.id].send) }}
+
+
                         </div>
                     </div>
                 </div>
-                    {{ form_end(forms[produit.id]) }}
+                    {{ form_end(forms[produit.id], {render_rest: false}) }}
                 </div>
-                {% set count = count + 1 %}
             {% endfor %}
     </div>
+
 
 {#    #}{#    </div>#}
 
