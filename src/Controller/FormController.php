@@ -22,9 +22,7 @@ class FormController extends AbstractController
     #[Route('/order/add/{idProduit}', name: '_order_add')]
     public function ajoutPanierAction(EntityManagerInterface $em, Request $request, $idProduit = null): Response
     {
-        $product = new Product();
 
-//        $form = $this->createForm(ProductType::class, $product);
         $productRepository = $em->getRepository(Product::class);
         $products = $productRepository->findAll();
         $forms = [];
@@ -40,17 +38,12 @@ class FormController extends AbstractController
                 ]
                 ]);
             $form->handleRequest($request);
-//            dump($request);
-//            die();
+
             if ($form->isSubmitted() && $form->isValid()) {
                 $order->setUser($this->getUser());
                 $order->setProduct($product);
-//                dump($order);die;
+                $product->setQuantStock($product->getQuantStock() - $order->getQuantity());
                 $em->persist($order);
-
-                //TODO : Met à jour le produit
-
-                //FIXME : Problème de données
 
                 $em->flush();
                 $this->addFlash('info', 'ajouté au panier');
@@ -126,16 +119,16 @@ class FormController extends AbstractController
     public function ajoutUserAction(EntityManagerInterface $em, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $id = $request->get('id');
-        if ($id == null){
+        if ($id == null) {
             $user = new User();
             $isUpdateMode = false;
-//            dump($this->getUser()->getRoles());
-//            die();
-            if ($this->getUser()->getRoles()[0] == "ROLE_SUPERADMIN"){
-                $user->setRoles(["ROLE_ADMIN"]);
-            }
-            else {
-                $user->setRoles(["ROLE_CLIENT"]);
+
+            if (!is_null($this->getUser())) {
+                if ($this->getUser()->getRoles()[0] == "ROLE_SUPERADMIN") {
+                    $user->setRoles(["ROLE_ADMIN"]);
+                } else {
+                    $user->setRoles(["ROLE_CLIENT"]);
+                }
             }
         }
         else{
@@ -151,11 +144,6 @@ class FormController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $password = $user->getPassword();
-            //Pour le service
-            $response = $this->forward('App\Controller\AccueilController',
-            [
-                'clearPassword' => $password,
-            ]);
             $userRepository = $em->getRepository(User::class);
             $isSamePassword = $userRepository->findOneBy(['password' => $password]);
             if (!$isSamePassword) {
@@ -164,6 +152,9 @@ class FormController extends AbstractController
                     $user->getPassword()
                 );
                 $user->setPassword($hashedPassword);
+                $em->persist($user);
+                $em->flush();
+                $this->addFlash('info', 'Création du compte réussi !');
             }
 
 
@@ -182,7 +173,5 @@ class FormController extends AbstractController
            'userform' => $form->createView(),
        );
        return $this->render('Form/add_user.html.twig', $args);
-//       return $this->render('Product/view.html.twig', $args);
-
     }
 }

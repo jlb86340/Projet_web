@@ -4,25 +4,43 @@
 
 {% block titre_principal %}{{ parent() }} : Panier{% endblock %}
 {% block vue %}
-    <p><a href="{{ path('produit_add') }}">ajouter un produit</a></p>
 
-    {% if produits|length == 0 %}
-        <p>Aucun produit dans la base de données</p>
+    {% if orders|length == 0 %}
+        <p>Aucun élément dans le panier</p>
     {% else %}
-        <table>
+        <table class="table">
             <tr>
-                <th>Dénomination</th>
-                <th>Prix</th>
-                <th>Quantité</th>
+                <th scope="col">Dénomination</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix total</th>
+                <th scope="col">Action</th>
             </tr>
+            {% set totalPrice = 0 %}
+            {% set totalQuant = 0 %}
             {% for order in orders %}
                 <tr>
-                    <td>{{ order.product }}</td>
-                    <td>{{ order.quantStock }}</td>
-                    </tr>
-            {% endfor %}
+                    <td>{{ order.product.libelle }}</td>
+                    <td>{{ order.product.price }} €</td>
+                    <td>{{ order.quantity }}</td>
+                    <td> {{ order.product.price * order.quantity}} €</td>
+                    <td>
+                        <a href="{{ path('app_order_delete_item' , { 'idOrder' : order.id }) }}" class="btn btn-warning"> Supprimer </a>
+                    </td>
+                    {% set totalPrice = totalPrice + order.product.price * order.quantity  %}
+                    {% set totalQuant = totalQuant + order.quantity %}
+                </tr>
+                {% endfor %}
+            <td>Total</td>
+            <td></td>
+            <td>{{ totalQuant }}</td>
+            <td>{{ totalPrice }} €</td>
+
         </table>
+        <tr>
+            <a href="{{ path('app_order_validate')}}" class="btn btn-success"> Acheter </a>
+            <a href="{{ path('app_order_empty')}}" class="btn btn-warning"> Vider </a>
+        </tr>
     {% endif %}
 
-    {{ dump(orders) }}
 {% endblock %}

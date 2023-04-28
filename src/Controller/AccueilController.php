@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Services\PasswordService\PasswordService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,26 +15,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
-    //#[Route('/{clearPassword}', name: 'app_accueil_password')]
-    public function indexAction(string $clearPassword = null): Response
+//    #[Route('/{newPassword}', name: 'app_accueil_password')]
+    public function indexAction(string $newPassword = null, EntityManagerInterface $em): Response
     {
-        $passwordService = new PasswordService();
-        $user = $this->getUser();
+        $UserRepository = $em->getRepository(User::class);
         $isStrongPassword = null;
-//        dump($user);
-        dump($clearPassword);
-        if ($user != null){
-            if ($passwordService->testPassword($user->getPassword())) {
+        if ($newPassword != null) {
+
+            $passwordService = new PasswordService();
+            dump($this->getUser()->getPassword());die;
+            if ($passwordService->testPassword($newPassword)) {
                 $isStrongPassword = true;
             } else {
                 $isStrongPassword = false;
             }
         }
+
         $args = array(
             'isStrongPassword' => $isStrongPassword,
         );
         return $this->render('Accueil/index.html.twig', $args);
     }
+
     public function menuAction(): Response
     {
         $user = $this->getUser();
