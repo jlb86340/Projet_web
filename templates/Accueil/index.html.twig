@@ -3,16 +3,7 @@
 {% block title %}{{ parent() }} : Accueil{% endblock %}
 {% block vue %}
 <div class="container">
-    {% if not isStrongPassword == null %}
-        {{ dump(isStrongPassword) }}
-        {% if  isStrongPassword == true %}
-{#                {{ dump(isStrongPassword) }}#}
-                Votre mot de passe est fort
-            {% else %}
-{#                {{ dump(isStrongPassword) }}#}
-                Votre mot de passe est faible (contient azerty, qwerty, ou 123465)
-            {% endif %}
-    {% endif %}
+        <p>{{ message }}</p>
 </div>
 {% endblock %}
 

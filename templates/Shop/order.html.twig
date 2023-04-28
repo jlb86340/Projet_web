@@ -4,7 +4,6 @@
 
 {% block titre_principal %}{{ parent() }} : Panier{% endblock %}
 {% block vue %}
-
     {% if orders|length == 0 %}
         <p>Aucun élément dans le panier</p>
     {% else %}

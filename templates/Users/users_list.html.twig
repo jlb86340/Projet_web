@@ -7,6 +7,13 @@
     {% if users|length == 0 %}
         <p>Aucun produit dans la base de données</p>
     {% else %}
+
+        {% for info in app.session.flashBag.get('info') %}
+            <div class="alert alert-danger" role="alert">
+                {{ info }}
+            </div>
+        {% endfor %}
+
         <table>
             <tr>
                 <th>login</th>

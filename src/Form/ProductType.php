@@ -15,14 +15,18 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle',null,
+            ->add('libelle', null,
                 [
-                    'required'=>true,
-                    'invalid_message'=>'Renseigner un libelle',
-                    'help'=>'Nom du produit'
+                    'label' => 'Dénomination',
                 ])
-            ->add('price')
-            ->add('quantStock');
+            ->add('price', null,
+                [
+                    'label' => 'Prix',
+                ])
+            ->add('quantStock', null,
+                [
+                    'label' => 'Quantité',
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

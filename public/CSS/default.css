@@ -2,8 +2,6 @@ html,main{
     align-items: center;
     justify-content: center;
 }
-
-
 card{
     margin: 500px;
     alignment: center;
@@ -11,7 +9,6 @@ card{
 h1,h2{
     text-align: center;
 }
-
 .container {
     display: flex;
     justify-content: center;

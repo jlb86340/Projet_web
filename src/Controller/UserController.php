@@ -38,15 +38,18 @@ class UserController extends AbstractController
         $userRepository = $em->getRepository(User::class);
         $user = $userRepository->find($id);
 
+        dump($user);die();
         if (is_null($user))
             throw new NotFoundHttpException('erreur suppression utilisateur ' . $id);
 
-        if ($id == $user->getId())
+        if ($user == $this->getUser()) {
             return $this->redirectToRoute('app_user_list');
+        }
+
 
         $em->remove($user);
         $em->flush();
-        $this->addFlash('info', 'suppression utilisateur ' . $id . ' réussie');
+        $this->addFlash('info', 'Suppression de l\'utilisateur ' . $user->getName() ." ". $user->getSurname() . " (" . $user->getid() .') réussie');
 
         return $this->redirectToRoute('app_user_list');
     }

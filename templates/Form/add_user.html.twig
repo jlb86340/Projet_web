@@ -12,6 +12,12 @@
         {% endif %}
             {{ form_start(userform) }}
 
+    {% for info in app.session.flashBag.get('info') %}
+        <div class="alert alert-success" role="alert">
+            {{ info }}
+        </div>
+    {% endfor %}
+
     <div class="container">
         <div class="card" style="width: 18rem;">
             <div class="card-body">

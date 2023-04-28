@@ -88,14 +88,13 @@ class OrderController extends AbstractController
 
         $orders = $orderRepository->findByUser($this->getUser());
 
+        foreach ($orders as $order) {
+            $qtt = $order->getQuantity();
+            $product = $productRepository->find($order->getProduct());
+            $product->setQuantStock($product->getQuantStock() + $qtt);
+            $em->remove($order);
+        }
 
-
-        foreach ($orders as $order)
-        $qtt = $order->getQuantity();
-        $product = $productRepository->find($order->getProduct());
-        $product->setQuantStock(  $product->getQuantStock() + $qtt );
-
-        $em->remove($order);
 
         $em->flush();
         $this->addFlash('info', 'Commande vidé');

@@ -35,13 +35,12 @@ class ProduitController extends AbstractController
         {
             $em->persist($product);
             $em->flush();
-            $this->addFlash('info', 'ajout du produit réussie');
-            return $this->redirectToRoute('app_accueil');
+            $this->addFlash('isAdded', 'Ajout du produit réussie');
+            return $this->render('Form/add_product.html.twig');
         }
 
         if ($form->isSubmitted())
             $this->addFlash('info', 'formulaire produit incorrect');
-        dump($_POST);
 
         $args = array(
             'myform' => $form->createView(),

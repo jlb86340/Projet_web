@@ -93,12 +93,12 @@ class FormController extends AbstractController
         {
             $em->persist($product);
             $em->flush();
-            $this->addFlash('info', 'Produit'. $product->getLibelle() .'à été ajouté avec une quantité de' . $product->getQuantStock());
-            return $this->redirectToRoute('app_accueil');
+            $this->addFlash('info', 'Produit '. $product->getLibelle() .' à été ajouté avec une quantité de ' . $product->getQuantStock());
+            return $this->redirectToRoute('app_form_product_add');
         }
 
         if($form->isSubmitted())
-            $this->addFlash('info', 'Formulaire ajout produit incorrect');
+            $this->addFlash('error', 'Formulaire ajout produit incorrect !');
 
         $args = array(
             'isUpdateMode' => $isUpdateMode,

@@ -10,21 +10,40 @@
     {% else %}
     <h2>Ajout d'un produit</h2>
     {% endif %}
-{#    {{ form(productform) }}#}
-{{ form_start(productform) }}
-{#    {{ form_row(productform.libelle) }}#}
 
-    {{ form_label(productform.libelle) }}
-    {{ form_widget(productform.libelle) }}
-    {{ form_errors(productform.libelle) }}
-    <span style="font-size: 11px">
-    {{ form_help(productform.libelle) }}
-    </span>
-    <hr>
-    {{ form_row(productform.price) }}
-    <hr>
-    {{ form_row(productform.quantStock) }}
-    <input type="submit" value="Envoyer">
-{{ form_end(productform) }}
+    {{ form_start(productform) }}
+    {% for info in app.session.flashBag.get('info') %}
+        <div class="alert alert-success" role="alert">
+            {{ info }}
+        </div>
+    {% endfor %}
+
+    {% for error in app.session.flashBag.get('error') %}
+        <div class="alert alert-warning" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+
+    <div class="container">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <div class="row">
+                <div class="mb-3">
+                    {{ form_row(productform.libelle, {'attr': {'class': 'form-control'}})  }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(productform.price, {'attr': {'class': 'form-control'}})  }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(productform.quantStock, {'attr': {'class': 'form-control', 'min' : 0}})  }}
+                </div>
+                <div>
+                        <input type="submit" value="Envoyer" data-bs-dismiss="toast" aria-label="Close">
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(productform) }}
+
 
 {% endblock %}
