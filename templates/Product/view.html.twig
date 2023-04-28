@@ -6,27 +6,53 @@
 
 {% block vue %}
 
-    <div class="row justify-content-evenly">
-
-            {% for produit in produits %}
-                <div class="col-5">
-                    {{ form_start(forms[produit.id]) }}
-                <div class="card" style="width: 18rem;">
+    <div class="row" style="width: 100%">
+        {% for produit in produits %}
+        <div class="col-auto" style="margin: 15px; align-content: center">
+        {{ form_start(forms[produit.id]) }}
+            <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                    <img src='https://place-hold.it/286x180/DD725C.gif?text={{ produit.libelle }}' class="card-img-top">
                     <div class="card-body">
-                        <img src='https://place-hold.it/286x180/DD725C.gif?text={{ produit.libelle }}' class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ produit.libelle }}</h5>
-                            <p class="card-text">{{ produit.price }} €</p>
-                            <div>
-                                {{ form_row(forms[produit.id].quantity , { 'attr' : {'min' : 0 , 'max' : produit.quantStock}}) }}
+                        <h5 class="card-title">{{ produit.libelle }}</h5>
+                        <p class="card-text">{{ produit.price }} €</p>
+                        <div>
+                            {{ form_row(forms[produit.id].quantity , { 'attr' : {'min' : 0 , 'max' : produit.quantStock}}) }}
 
-                            </div>
-                            {{ form_row(forms[produit.id].send) }}
                         </div>
+                        {{ form_row(forms[produit.id].send) }}
                     </div>
                 </div>
-                    {{ form_end(forms[produit.id]) }}
-                </div>
-            {% endfor %}
+            </div>
+            {{ form_end(forms[produit.id]) }}
+        </div>
+        {% endfor %}
     </div>
+
+
+{#    <div class="row justify-content-center">#}
+{#            {% for produit in produits %}#}
+{#                    {{ form_start(forms[produit.id]) }}#}
+{#                        <div class="col-5">#}
+{#                        <div class="form-group">#}
+{#                    <div class="card" style="width: 18rem;">#}
+{#                        <div class="card-body">#}
+{#                            <img src='https://place-hold.it/286x180/DD725C.gif?text={{ produit.libelle }}' class="card-img-top">#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title">{{ produit.libelle }}</h5>#}
+{#                                <p class="card-text">{{ produit.price }} €</p>#}
+{#                                <div>#}
+{#                                    {{ form_row(forms[produit.id].quantity , { 'attr' : {'min' : 0 , 'max' : produit.quantStock}}) }}#}
+
+{#                                </div>#}
+{#                                {{ form_row(forms[produit.id].send) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    {{ form_end(forms[produit.id]) }}#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#            </tr>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}
